@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.io.IOException;
 
 //Project by Rustam Fadeev
 public class GUI extends JFrame {
@@ -32,7 +31,7 @@ public class GUI extends JFrame {
     /**
      * Checks if 2 points are the same
      *
-     * @param p1 frist Point3D
+     * @param p1 first Point3D
      * @param p2 second Point3D
      * @return true if coordinates of both points are the same, false otherwise
      */
@@ -71,7 +70,7 @@ public class GUI extends JFrame {
         frame.setLocationRelativeTo(null); //Open window in center
 
         //Variables
-        int lowX = 50; //Starting x postion
+        int lowX = 50; //Starting x position
         int width = 45; //Width of a tile
         int height = 54; //Height of a tile
         int lowY = 30; //Starting y position
@@ -81,7 +80,7 @@ public class GUI extends JFrame {
         JLabel[][][] jlabel = new JLabel[8][15][5]; //Array of all labels
         JLabel window = new JLabel(""); //Label in case of winning
         int row, col, depth;
-        //Place all Lables to their positions, according to "tiles"
+        //Place all Labels to their positions, according to "tiles"
         for (depth = 4; depth >= 0; depth--) { //From 4, because of Swing Drawing
             for (row = 0; row < 8; row++)
                 for (col = 0; col < 15; col++) {
@@ -156,7 +155,7 @@ public class GUI extends JFrame {
                                                 chosen = null;
                                                 System.out.println(" deleted since matched");
                                             } else { //Non-matching tiles
-                                                //put chosen's icon back to normal
+                                                //put chosen icon back to normal
                                                 jlabel[chosen.getLocation().getX()][chosen.getLocation().getY()][chosen.getLocation().getZ()].setIcon(new ImageIcon(GUI.class.getResource(chosen.pathOfTile)));
                                                 chosen = null;
                                                 System.out.println(" nothing. Chosen is null");

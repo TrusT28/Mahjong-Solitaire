@@ -1,10 +1,10 @@
 package util;
 
 public class Tile {
-    public String nameOfTile;//Name/Number of the tile
-    public String pathOfTile; //Path to image
-    public String pathOfChosenTile; //Path to image "clicked"
-    public int id;
+    public final String nameOfTile;//Name/Number of the tile
+    public final String pathOfTile; //Path to image
+    public final String pathOfChosenTile; //Path to image "clicked"
+    public final int id;
     private Point3D location = null; //Location in Tiles from Builder
 
     public Tile(String nameOfTile, int id) {

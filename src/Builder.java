@@ -13,14 +13,13 @@ public class Builder {
     //In this implementation The top-center tile is located on level 1 (depth 0), position (0,14), but in GUI it is depicted on top (lvl 5).
     //Run "check_Map" to see how Map looks like. It will help understanding the code. Notice that (0,14)=5
     //----------
-    private int[][] Map = new int[8][15]; //Map of the Tower. Levels 1-5. Need in GUI
-    private Tile[][][] Tiles = new Tile[8][15][5]; //Location of tiles on each level. Need in GUI
-    private boolean[][][] placingPositions = new boolean[8][15][5]; //Boolean Map for each level. Useful for "Microsoft" Algorithm. Need in GUI
-    private List<Point2D> clickablePositions = new ArrayList<>(); //Dynamic Array of clickable positions
-    private List<Point3D> accessibleForPlacingPositions = new ArrayList<>(); //Dynamic Array of accessible positions for placing a Tile
-    private List<Tile> accessibleForPlacingTiles = new ArrayList<>(); //Dynamic Array of currently accessible tiles to place
-    private int[] listOfTiles = new int[42];//List of Types of tiles. Check "determine_tile" for details
-    private static Point2D.Double[] specialPositions = {
+    private final int[][] Map = new int[8][15]; //Map of the Tower. Levels 1-5. Need in GUI
+    private final Tile[][][] Tiles = new Tile[8][15][5]; //Location of tiles on each level. Need in GUI
+    private final boolean[][][] placingPositions = new boolean[8][15][5]; //Boolean Map for each level. Useful for "Microsoft" Algorithm. Need in GUI
+    private final List<Point2D> clickablePositions = new ArrayList<>(); //Dynamic Array of clickable positions
+    private final List<Point3D> accessibleForPlacingPositions = new ArrayList<>(); //Dynamic Array of accessible positions for placing a Tile
+    private final int[] listOfTiles = new int[42];//List of Types of tiles. Check "determine_tile" for details
+    private static final Point2D.Double[] specialPositions = {
             //Special positions, which need unique checking
             //Since I use 1 tile - 1 square style, tiles which are placed not-in-line require unique checking
             new Point2D.Double(3, 1), new Point2D.Double(4, 1),
@@ -65,13 +64,13 @@ public class Builder {
         //It can happen that 1st position is on depth n and 2nd is on depth n+1
 
         int depth = 0; //Level 1
-        findAccesiblePositions(depth); //Find all accessible positions at current depth
+        findAccessiblePositions(depth); //Find all accessible positions at current depth
         while (depth < 4) { //Until 4, because the only accessible position at depth 4 will be filled during depth=3
             //Find 2 positions at random
             final Point3D p1 = findRandomPositions(); //Find first random position
             if (accessibleForPlacingPositions.size() == 0) { //If there is no accessible positions on this depth, go up
                 depth++; //Go level up
-                findAccesiblePositions(depth);//Find position there
+                findAccessiblePositions(depth);//Find position there
             }
             final Point3D p2 = findRandomPositions(); //Find second random position
             Tile[] random_tiles = findTwoRandomTile();//Find two random matching tiles to place there
@@ -138,7 +137,7 @@ public class Builder {
     }
 
     /**
-     * Find completely random position, based on "accesiblePositions" List
+     * Find completely random position, based on "accessiblePositions" List
      *
      * @return Point3D which represents position at boolean[][][] placingPosition
      */
@@ -190,7 +189,8 @@ public class Builder {
      * @return Tile[2] containing 2 random matching tiles, accessible for placing
      */
     Tile[] findTwoRandomTile() {
-        accessibleForPlacingTiles = new ArrayList<>(); //Delete all accessible tiles to generate them again next time
+        //Dynamic Array of currently accessible tiles to place
+        List<Tile> accessibleForPlacingTiles = new ArrayList<>(); //Delete all accessible tiles to generate them again next time
         Tile[] randomTiles = new Tile[2]; //Array of 2 tiles
         Random random = new Random();
         //Update list of possible tiles
@@ -353,7 +353,7 @@ public class Builder {
      *
      * @param depth find all positions at given depth(0-4), where you can possibly place a Tile
      */
-    void findAccesiblePositions(int depth) {
+    void findAccessiblePositions(int depth) {
         for (int row = 0; row < 8; row++)
             for (int col = 0; col < 15; col++)
                 if (placingPositions[row][col][depth])
